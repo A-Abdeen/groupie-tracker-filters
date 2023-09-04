@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{{.Name}}</title>
+      <link rel="stylesheet" href="/css/details.css"/>
+  </head>
+  <body>
+    <div class="cool-header">
+      <h2>
+        <a href="/" title="Back to Home Page">{{.Name}}</a>
+      </h2>
+      <div class="container">
+        <div class="l-col" style="text-align: end; margin-right: 10px;"><img src="{{.Image}}" alt="{{.Name}}"></div>
+        <div class="r-col" style="text-align: initial; margin-left: 10px;"><h6>Creation Date:<br>{{.Creationdate}}<br><br>First Album:<br>{{.FirstAlbum}}</h6></div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="l-col">
+        <div>
+          <input type="checkbox" id="mem">  
+          <h3><label for="mem">Artist/s</label></h3>
+          <h5>{{range .Member}}{{.}}<br>{{end}}</h5>  
+          <div>
+          <div>
+              <input type="checkbox" id="rel">
+              <h3><label for="rel">Concerts</label></h3>
+              <h5>{{range .Relations}}{{.}}<br>{{end}}</h5>
+          </div>
+</div>
+      </div>
+      </div>
+      <div class="r-col">
+      
+        <div>
+          <input type="checkbox" id="dat">
+          <h3><label for="dat">Dates</label></h3>
+          <h5>{{range .Dates}}{{.}}<br>{{end}}</h5>
+        </div>
+        <input type="checkbox" id="loc">
+        <h3><label for="loc">Locations</label></h3>
+        <h5>{{range .Locations}}{{.}}<br>{{end}}</h5>
+      
+      </div>
+    </div>
+  </body>
+</html>

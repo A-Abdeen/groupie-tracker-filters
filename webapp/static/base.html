@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Groupie</title>
+        <link rel="stylesheet" href="/css/base.css">
+
+    </head>
+    <body>
+        <div class="cool-header">
+            <a href="/" title="Back to Home Page"><h1>Groupie Tracker</h1></a>
+        </div>
+           <div class="box">
+            <form class="form" method="GET" action="/search">                      
+             <input list="browsers" name="search" id="search" autocomplete="off">
+            <datalist id="browsers">
+             {{range .}}<option value="{{.Name}}">{{.Name}}</option>
+             <option>{{.Creationdate}}</option>            
+             {{range .Locations}}<option value="{{.}}">{{.}}</option>{{end}}
+             {{range .Member}}<option value="{{.}}">{{.}}</option>{{end}}
+             {{range .Dates}}<option value="{{.}}">{{.}}</option>{{end}}
+             <option>{{.FirstAlbum}}</option>{{end}}
+             </datalist>
+             <button type="submit"><i class="fa fa-search">search</i></button></form>
+                </div>
+        <div class="artists-container">
+            {{range .}} <!-- range over APIcall to get present the name and images -->
+            <a href="/details?id={{.Id}}" class="artist-card"> <!-- the a tag turns the image along with the name to a url that is clickable -->
+                <div class="artist-image">
+                    <img src="{{.Image}}" alt="{{.Name}}">
+                </div>  
+                <div class="artist-info">
+                    {{.Name}}
+                </div>   
+            </a> 
+            <div class="searchresult">
+  {{.SearchResult}}</div>
+            {{end}}
+        </div>
+    </body>
+</html>

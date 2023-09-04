@@ -1,0 +1,61 @@
+package gt
+
+import (
+	// handlers "gt/webapp/handlers"
+	"strings"
+	"fmt"
+)
+
+func SuggestionBox(typedData string, APIcall []Artists) {
+	typedDataInt := Atoi(typedData)
+	typedData = strings.ToUpper(typedData)
+	// var dataToReturn []Artists
+	var toDisplay string
+	inputNumOfWords := len(typedData)
+	ifMatching := false 
+	fmt.Print(typedData)
+	if inputNumOfWords >=1 {
+		
+	for i, oneArtist := range APIcall {
+		if strings.ToUpper(oneArtist.Name)[1:inputNumOfWords] == typedData {
+			toDisplay = oneArtist.Name
+			ifMatching = true
+		}
+		for _, oneMember := range oneArtist.Member {
+			if strings.ToUpper(oneMember)[1:inputNumOfWords] == typedData {
+				toDisplay = oneMember
+				ifMatching = true
+			}
+		}
+		if typedDataInt == oneArtist.Creationdate {
+			toDisplay = "Search matches creation date " + typedData
+			ifMatching = true
+		}
+		firstAlbum := Atoi(oneArtist.FirstAlbum)
+		if typedDataInt == firstAlbum {
+			toDisplay = "Search matches First Album date " + typedData
+			ifMatching = true
+		}
+		for _, oneLocation := range oneArtist.Locations {
+			if strings.ToUpper(oneLocation)[1:inputNumOfWords] == typedData {
+				toDisplay = oneLocation
+				ifMatching = true			
+			}
+		}
+		for _, oneDate := range oneArtist.Dates {
+			oneDateInt := Atoi(oneDate)
+			if oneDateInt == typedDataInt {
+				toDisplay = "Search matches Date " + oneDate
+				ifMatching = true
+			}
+		}
+		if ifMatching {
+		ArtistDetails := APIcall[i]
+		ArtistDetails.Suggestions = toDisplay
+		// dataToReturn = append(dataToReturn, ArtistDetails)
+	}
+	ifMatching = false
+	}
+	} 
+	// return dataToReturn
+}

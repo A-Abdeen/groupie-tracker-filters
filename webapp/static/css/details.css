@@ -1,0 +1,69 @@
+body {
+    background-color: #686868;
+    text-align: center; 
+    color: #dab744; 
+    font-family: "Spicy Rice", /*cursive*/;
+    font-size: 32px;
+}
+/* header used same as the one in the homepage but with the artist name*/
+.cool-header {
+    background-color: #000000; 
+    padding: 10px 0;
+}
+.cool-header a {
+  text-decoration: none;
+  color: inherit;
+}
+/*check box expands when clicked but kept hidden*/
+.container {
+  display: flex;
+  text-align: center;
+}
+.l-col {
+  width: 50%;
+}
+.r-col {
+  flex-grow: 1;
+}
+input[type="checkbox"] {  
+  opacity: 0;
+}
+input[type="checkbox"]:hover ~ h3 ~ h5 {
+min-height: fit-content;
+  max-height: 2000px;
+}
+input[type="checkbox"]:checked ~ h3 ~ h5 {
+  min-height: fit-content;
+    align-items:baseline; 
+    max-height: 2000px;
+  }
+  input[type="checkbox"]:checked ~ h3 {
+    color:#ff0000;
+    transform: scale(1.15);
+    /* background-color:#dab744; */
+    min-height: fit-content;
+      align-items:baseline; 
+      max-height: 2000px;
+    }
+label {
+  background: #282828;
+  text-align: center; 
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+label:hover{
+  color:#282828;
+  background-color:#dab744;
+  
+}
+h5 {
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.5s ease;
+  display:inline-block;
+  text-align: center;
+  align-self:initial;
+  line-height: 1.5em;
+  width: 800px;
+}
