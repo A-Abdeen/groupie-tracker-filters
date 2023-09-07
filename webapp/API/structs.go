@@ -1,16 +1,17 @@
 package gt
 
 type Artists struct {
-	Id           int      `json:"id"`
-	Image        string   `json:"image"`
-	Name         string   `json:"name"`
-	Member       []string `json:"members"`
-	Creationdate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-	Relations    []string
-	Locations    []string
-	Dates        []string
-	SearchResult string
+	Id              int      `json:"id"`
+	Image           string   `json:"image"`
+	Name            string   `json:"name"`
+	Member          []string `json:"members"`
+	Creationdate    int      `json:"creationDate"`
+	FirstAlbum      string   `json:"firstAlbum"`
+	Relations       []string
+	Locations       []string
+	Dates           []string
+	LocationCountry []string
+	SearchResult    string
 }
 type TmpAllConRel struct {
 	Index []struct {
@@ -47,6 +48,13 @@ type WebHandler struct {
 	Dates     *TmpDates
 	Relations *TmpAllConRel
 	*Err
+}
+
+type Filters struct {
+	Members         []int
+	Creation        string
+	FirstAlbum      string
+	ConcertLocation string
 }
 
 func (w WebHandler) PassError(x string, y int) WebHandler {

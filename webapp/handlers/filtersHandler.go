@@ -1,12 +1,10 @@
 package gt
 
 import (
-	// "fmt"
-	API "gt/webapp/API"
 	"html/template"
 	"net/http"
-	// "strings"
-	// "strconv"
+
+	API "gt/webapp/API"
 )
 
 func FiltersHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,14 +17,21 @@ func FiltersHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	typedData := r.FormValue("filters")
-	dataToReturn := API.Tosearch(typedData, APIcall)
+	members := r.FormValue("members")
+	creation := r.FormValue("Creationdate")
+	firstAlbum := r.FormValue("firstAlbumDate")
+	locations := r.FormValue("concertLocations")
+
+	filteredDataToReturn, err := API.OrNotTosearch(members, creation, firstAlbum,locations, APIcall)
+	if err != nil {
+		ErrorHandler(w, r, http.StatusInternalServerError)
+		return
+	}
 	t, err := template.ParseFiles(HtmlTmpl...)
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	t.ExecuteTemplate(w, "base.html", dataToReturn)
-
+	t.ExecuteTemplate(w, "base.html", filteredDataToReturn)
 }

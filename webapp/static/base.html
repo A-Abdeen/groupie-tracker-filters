@@ -8,6 +8,30 @@
     <body>
         <div class="cool-header">
             <a href="/" title="Back to Home Page"><h1>Groupie Tracker</h1></a>
+            <!DOCTYPE html>
+        <form id="filter-form" action="/filters" method="get">
+            <label>Filter by Number of Members:</label><br>
+            <label><input type="checkbox" name="members" value="1">1</label><br>
+            <label><input type="checkbox" name="members" value="2">2</label><br>
+            <label><input type="checkbox" name="members" value="3">3</label><br>
+            <label><input type="checkbox" name="members" value="4">4</label><br>
+            <label><input type="checkbox" name="members" value="5">5</label><br>
+            <label><input type="checkbox" name="members" value="6">6</label><br>
+            <label><input type="checkbox" name="members" value="7">7</label><br>
+    
+            <label>Filter by Creation Date:</label><br>
+            <input type="number" name="Creationdate" min="1900" max="2099"><br>
+    
+            <label>Filter by First Album Date:</label><br>
+            <input type="date" name="firstAlbumDate"><br>
+    
+            <input list="Locations" name="Location" id="search" autocomplete="on">
+            <datalist id="Locations">
+                {{range .Locations}}<option value="{{.}}">{{.}}</option>{{end}}
+            </datalist>
+
+            <button type="submit">Apply Filters</button>
+        </form>
         </div>
            <div class="box">
             <form class="form" method="GET" action="/search">                      
