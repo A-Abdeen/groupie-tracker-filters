@@ -15,7 +15,7 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 	membersInt := 0
 	var err error
 
-	if members == "" && creation == "" && firstAlbum == "" {
+	if members == "" && creation == "" && firstAlbum == "" && location == "" {
 		return APIcall, nil
 	}
 
@@ -26,7 +26,7 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 		}
 	}
 	if location != "" {
-	location = strings.ToUpper(location)
+		location = strings.ToUpper(location)
 	}
 	if firstAlbum != "" {
 		// Split the input string using "-"
@@ -100,17 +100,18 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 			}
 		}
 		if location != "" {
-		for _, oneLocation := range oneArtist.Locations {
-			location = strings.ReplaceAll(location, "-", ", ")
-			location = strings.ReplaceAll(location, "_", " ")
-			if strings.ToUpper(oneLocation) == location {
-				ifMatching = true
-			} else {
-				ifMatching = false
-				continue
+			for _, oneLocation := range oneArtist.Locations {
+				location = strings.ReplaceAll(location, "-", ", ")
+				location = strings.ReplaceAll(location, "_", " ")
+				if strings.ToUpper(oneLocation) == location {
+					ifMatching = true
+					break
+				} else {
+					ifMatching = false
+					continue
+				}
 			}
 		}
-	}
 		if ifMatching {
 			ArtistDetails := APIcall[i]
 			dataToReturn = append(dataToReturn, ArtistDetails)

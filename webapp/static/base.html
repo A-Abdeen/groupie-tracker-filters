@@ -25,27 +25,14 @@
             <label>Filter by First Album Date:</label><br>
             <input type="date" name="firstAlbumDate"><br>
     
-            <input list="Locations" name="Location" id="search" autocomplete="on">
-            <datalist id="Locations">
-                {{range .Locations}}<option value="{{.}}">{{.}}</option>{{end}}
-            </datalist>
+            <select name="locations" id="location">
+               {{ range . }} {{range .Locations}}<option value="{{.}}">{{.}}</option>{{end}} {{ end}}
+              </select>
 
             <button type="submit">Apply Filters</button>
         </form>
         </div>
-           <div class="box">
-            <form class="form" method="GET" action="/search">                      
-             <input list="browsers" name="search" id="search" autocomplete="off">
-            <datalist id="browsers">
-             {{range .}}<option value="{{.Name}}">{{.Name}}</option>
-             <option>{{.Creationdate}}</option>            
-             {{range .Locations}}<option value="{{.}}">{{.}}</option>{{end}}
-             {{range .Member}}<option value="{{.}}">{{.}}</option>{{end}}
-             {{range .Dates}}<option value="{{.}}">{{.}}</option>{{end}}
-             <option>{{.FirstAlbum}}</option>{{end}}
-             </datalist>
-             <button type="submit"><i class="fa fa-search">search</i></button></form>
-                </div>
+          
         <div class="artists-container">
             {{range .}} <!-- range over APIcall to get present the name and images -->
             <a href="/details?id={{.Id}}" class="artist-card"> <!-- the a tag turns the image along with the name to a url that is clickable -->
