@@ -15,8 +15,12 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 	membersInt := 0
 	var err error
 
-	if members == "" && creation == "" && firstAlbum == "" && location == "" {
+	if members == "" && creation == "" && firstAlbum == "" && location == "none" {
 		return APIcall, nil
+	}
+
+	if location == "none" {
+		location = ""
 	}
 
 	if members != "" {

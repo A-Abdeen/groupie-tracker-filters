@@ -12,11 +12,9 @@ a {
     color: inherit;
 }
 
-/* No changes to the base styles */
-
 /* Header */
 .cool-header {
-    background-color: #000000; 
+    background-color: #000000;
     padding: 20px 0;
     text-align: center;
     font-size: 24px;
@@ -28,25 +26,21 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    padding: 0; /* Reset padding to 0 to remove any potential spacing */
-    margin: 0; /* Reset margin to 0 to remove any potential spacing */
-    border: none; /* Ensure there's no border */
+    padding: 0;
+    margin: 0;
+    border: none;
 }
-
 
 .artist-card {
     width: 220px;
     border-radius: 8px;
     overflow: hidden;
-    background-color: transparent;  /* This makes the card background transparent */
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
-    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: transparent;
+    transition: transform 0.2s;
 }
-
 
 .artist-card:hover {
     transform: scale(1.05);
-    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); */
 }
 
 .artist-image img {
@@ -57,7 +51,7 @@ a {
 
 .artist-info {
     border-radius: 8px;
-    background: #282828; /* Slightly lighter than body background */
+    background: #282828;
     padding: 10px;
     text-align: center;
     font-size: 26px;
@@ -65,18 +59,17 @@ a {
     margin-top: 10px;
 }
 
-.box{
+.box {
     color: #dab744;
     height: 30px;
     display: flex;
-    cursor:pointer;
+    cursor: pointer;
     padding: 10px 20px;
     background: #000000;
-    /* border-radius: 30px; */
     align-items: center;
     justify-content: center;
-   
 }
+
 .box:hover input {
     width: 400px;
     height: 30px;
@@ -84,7 +77,8 @@ a {
     font-size: larger;
     font-family: 'Arial', sans-serif;
 }
-.box input{ 
+
+.box input {
     border-radius: 10px;
     justify-content: center;
     color: #dab744;
@@ -95,23 +89,103 @@ a {
     transition: 0.8s;
     background: transparent;
 }
-button{
+
+button {
     background-color: #686868;
     color: #dab744;
     font-size: 25px;
     border-radius: 10px;
-    /* height: 20px; */
 }
-button:hover{
-    background-color:#dab744;
-    color: #686868;    
+
+button:hover {
+    background-color: #dab744;
+    color: #686868;
 }
-.artists-container .searchresult{
+
+.artists-container .searchresult {
     font-size: 24px;
     font-weight: 600;
     width: auto;
-    max-width: 200px;  }
-.datalist{
+    max-width: 200px;
+}
+
+.datalist {
     overflow: scroll;
     max-height: 0;
+}
+
+.filter-form-container {
+    position: fixed;
+    top: 0;
+    left: -500px;
+    width: 400px;
+    height: 100%;
+    background-color: #686868;
+    overflow-y: auto;
+    transition: left 0.5s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Added to push button to bottom */
+    padding: 20px; /* Added padding for inner content */
+}
+
+.filter-form-container.open {
+    left: 0;
+}
+
+.cool-header {
+    transition: padding-left 0.5s ease-in-out;
+}
+
+/* Additional styles for the filter form */
+.filter-form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff; /* Make text color white for better visibility */
+}
+
+.filter-form-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.filter-form-container input[type="number"],
+.filter-form-container input[type="date"],
+.filter-form-container select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff; /* Changed background to white */
+    color: #000; /* Changed text color to black */
+}
+
+.filter-form-container button[type="submit"] {
+    padding: 10px;
+    background-color: #dab744;
+    color: #686868;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Style the date range inputs */
+#startDate, #endDate {
+    display: inline-block;
+    width: calc(50% - 10px);
+}
+
+#creation-date-range {
+    position: relative;
+}
+
+.slider {
+    display: flex;
+}
+
+.date-range {
+    text-align: left;
+    margin-top: 5px;
 }
