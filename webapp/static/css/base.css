@@ -171,21 +171,78 @@ button:hover {
     cursor: pointer;
 }
 
-/* Style the date range inputs */
-#startDate, #endDate {
-    display: inline-block;
-    width: calc(50% - 10px);
-}
 
-#creation-date-range {
-    position: relative;
-}
 
-.slider {
+.range-slider {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 30px; /* Adjust as necessary */
+    margin-bottom: 30px;
 }
 
-.date-range {
-    text-align: left;
-    margin-top: 5px;
+
+.range-slider #date-range-values {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 100%; /* Positioned just below the sliders */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5px; /* A small gap between the sliders and the label */
+    z-index: 0; /* Ensuring this is behind the sliders */
+}
+
+input[type=range] {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    pointer-events: none; /* Disable click on the slider */
+}
+
+input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    z-index: 2;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #dab744;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all; /* Enable click on the thumb */
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: #dab744;
+    border: none;
+    pointer-events: none; /* Disable click on the track */
+}
+
+input[type=range]::-moz-range-thumb {
+    appearance: none;
+    z-index: 2;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #dab744;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all; /* Enable click on the thumb */
+}
+
+input[type=range]::-moz-range-track {
+    height: 5px;
+    background: #dab744;
+    border: none;
+    pointer-events: none; /* Disable click on the track */
 }

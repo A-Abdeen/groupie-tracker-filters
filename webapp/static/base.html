@@ -24,7 +24,7 @@
             <label><input type="checkbox" name="members" value="7">7</label><br>
 
             <label>Filter by Creation Date:</label><br>
-            <div id="creation-date-range">
+            <!-- <div id="creation-date-range">
                 <div class="slider">
                     <input type="range" id="min-date" name="minCreationDate" min="1900" max="2000" value="1900" oninput="updateValue()">
                     <input type="range" id="max-date" name="maxCreationDate" min="2000" max="2099" value="2099" oninput="updateValue()">
@@ -33,7 +33,15 @@
                     <span id="date-range-values">1900 - 2099</span>
                 </div>
             </div>
-            <br>
+            <br> -->
+
+            <div class="range-slider">
+                <input type="range" id="lower" name="minCreationDate" max="2023" min="1950" step="0" value="1950">
+                <input type="range" id="upper" name="maxCreationDate" max="2023" min="1950" step="0" value="2023">
+                <div id="date-range-values">1950 - 2023</div>
+            </div>
+            
+
 
 
             <label>Filter by First Album Date:</label><br>
@@ -50,7 +58,8 @@
                 <option value="none" selected>None</option>
             </select>
             
-            <button type="submit">Apply Filters</button>
+            <button type="submit">Apply Filters</button> <button type="button" id="clear-filters">Clear Filters</button>
+
 
           
         </form> 
@@ -80,18 +89,29 @@
     </div>
 
     <script>
-        function updateValue() {
-            const minDate = document.getElementById('min-date');
-            const maxDate = document.getElementById('max-date');
-            const dateRangeValues = document.getElementById('date-range-values');
-            
-            dateRangeValues.textContent = `${minDate.value} - ${maxDate.value}`;
-        }
+        
     
         document.addEventListener('DOMContentLoaded', function() {
             const filterFormContainer = document.getElementById('filter-form-container');
             const toggleFiltersButton = document.getElementById('toggle-filters');
             const coolHeader = document.querySelector('.cool-header');
+            const clearFiltersButton = document.getElementById('clear-filters');
+
+            const header = document.querySelector('.cool-header h1');
+            header.addEventListener('click', function() {
+            localStorage.removeItem('formData');
+            form.reset();
+            updateValue(); // to reset the range input display
+            uncheckAllCheckboxes();
+            });
+
+            
+            clearFiltersButton.addEventListener('click', function() {
+            localStorage.removeItem('formData');
+            form.reset();
+            updateValue(); // to reset the range input display
+            uncheckAllCheckboxes();
+            });
     
             toggleFiltersButton.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent this click from being detected by the click-outside listener
@@ -105,13 +125,28 @@
             });
              const form = document.getElementById('filter-form');
 
-        // Function to update the values display
-        function updateValue() {
-            const minDate = document.getElementById('min-date');
-            const maxDate = document.getElementById('max-date');
-            const dateRangeValues = document.getElementById('date-range-values');
-            dateRangeValues.textContent = `${minDate.value} - ${maxDate.value}`;
+
+        const lower = document.getElementById('lower');
+        const upper = document.getElementById('upper');
+        const dateRangeValues = document.getElementById('date-range-values');
+
+        function updateValues() {
+            if (parseInt(lower.value) >= parseInt(upper.value)) {
+                if (lower.value == upper.value) {
+                    lower.value = parseInt(upper.value) - 1;
+                } else {
+                    upper.value = parseInt(lower.value) + 1;
+                }
+            }
+            dateRangeValues.textContent = `${lower.value} - ${upper.value}`;
         }
+
+        lower.addEventListener('input', updateValues);
+        upper.addEventListener('input', updateValues);
+
+        // Initial call to set displayed values
+        updateValues();
+
 
         // Load saved filters from Local Storage
         function loadFilters() {
@@ -119,24 +154,34 @@
             
             if(savedFormData) { 
                 Object.keys(savedFormData).forEach(key => {
-                    const element = document.getElementsByName(key)[0];
+                    const elements = document.getElementsByName(key);
 
-                    if (element) {
-                        switch(element.type) {
-                            case 'checkbox':
-                                element.checked = savedFormData[key] === "true";
-                                break;
-                            default:
-                                element.value = savedFormData[key];
+                    elements.forEach(element => {
+                        if (element.type === 'checkbox' && Array.isArray(savedFormData[key])) {
+                            element.checked = savedFormData[key].includes(element.value);
+                            element.checked ? element.setAttribute('checked', '') : element.removeAttribute('checked');
+                        } else if (element.type === 'checkbox') {
+                            element.checked = savedFormData[key] === "true";
+                            element.checked ? element.setAttribute('checked', '') : element.removeAttribute('checked');
+                        } else {
+                            element.value = savedFormData[key];
                         }
-                    }
+                    });
+
                 });
                 updateValue();
             }
         }
 
-        // Save current filters to Local Storage
-        form.addEventListener('submit', function() {
+        function uncheckAllCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+
+          // Save current filters to Local Storage
+          form.addEventListener('submit', function() {
             const formData = new FormData(form);
             const savedFormData = {};
 
@@ -147,6 +192,18 @@
                         : [savedFormData[key], value];
                 } else {
                     savedFormData[key] = value;
+                }
+            });
+
+            // Save the checkboxes states correctly
+            const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                if (!checkbox.checked) return;
+
+                if (Array.isArray(savedFormData[checkbox.name])) {
+                    savedFormData[checkbox.name].push(checkbox.value);
+                } else {
+                    savedFormData[checkbox.name] = [checkbox.value];
                 }
             });
 

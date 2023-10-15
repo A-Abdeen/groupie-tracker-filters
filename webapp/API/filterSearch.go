@@ -3,25 +3,28 @@ package gt
 import (
 	// handlers "gt/webapp/handlers"
 	//"debug/macho"
+
 	"strconv"
 	"strings"
 )
 
-func OrNotTosearch(members string, creation string, firstAlbum string, location string, APIcall []Artists) ([]Artists, error) {
+func OrNotTosearch(members string, mincreation string, maxcreation string, firstAlbum string, location string, APIcall []Artists) ([]Artists, error) {
 	albumYear := 0
 	albumMonth := 0
 	albumDay := 0
-	creationYear := 0
+	mincreationYear := 0
+	maxcreationYear := 0
 	membersInt := 0
 	var err error
 
-	if members == "" && creation == "" && firstAlbum == "" && location == "none" {
+	if members == "" && mincreation == "1900" && maxcreation == "2099" && firstAlbum == "" && location == "none" {
 		return APIcall, nil
 	}
 
 	if location == "none" {
 		location = ""
 	}
+	// fmt.Println(firstAlbum)
 
 	if members != "" {
 		membersInt, err = strconv.Atoi(members)
@@ -52,9 +55,16 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 
 	}
 
-	if creation != "" {
+	if mincreation != "" {
 		// Extract the year and convert to int
-		creationYear, err = strconv.Atoi(creation)
+		mincreationYear, err = strconv.Atoi(mincreation)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if maxcreation != "" {
+		// Extract the year and convert to int
+		maxcreationYear, err = strconv.Atoi(maxcreation)
 		if err != nil {
 			return nil, err
 		}
@@ -73,8 +83,8 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 				}
 			}
 		}
-		if creation != "" {
-			if creationYear <= oneArtist.Creationdate {
+		if mincreation != "" && maxcreation != "" {
+			if (mincreationYear <= oneArtist.Creationdate) && (maxcreationYear >= oneArtist.Creationdate) {
 				ifMatching = true
 			} else {
 				ifMatching = false
@@ -87,16 +97,27 @@ func OrNotTosearch(members string, creation string, firstAlbum string, location 
 
 			// Extract the components and convert them to integers
 			year := Atoi(DateComponents[2])
+			// fmt.Println(DateComponents[2])
 
 			month := Atoi(DateComponents[1])
+			// fmt.Println(DateComponents[1])
 
 			day := Atoi(DateComponents[0])
+			// fmt.Println(DateComponents[0])
 
-			if albumYear <= year {
+			if albumYear < year {
+				ifMatching = true
+			} else if albumYear == year {
 				if albumMonth <= month {
 					if albumDay <= day {
 						ifMatching = true
+					} else {
+						ifMatching = false
+						continue
 					}
+				} else {
+					ifMatching = false
+					continue
 				}
 			} else {
 				ifMatching = false

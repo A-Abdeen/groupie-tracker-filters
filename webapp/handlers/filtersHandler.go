@@ -18,11 +18,12 @@ func FiltersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	members := r.FormValue("members")
-	creation := r.FormValue("Creationdate")
+	mincreation := r.FormValue("minCreationDate")
+	maxcreation := r.FormValue("maxCreationDate")
 	firstAlbum := r.FormValue("firstAlbumDate")
 	location := r.FormValue("locations")
 
-	filteredDataToReturn, err := API.OrNotTosearch(members, creation, firstAlbum, location, APIcall)
+	filteredDataToReturn, err := API.OrNotTosearch(members, mincreation, maxcreation, firstAlbum, location, APIcall)
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
