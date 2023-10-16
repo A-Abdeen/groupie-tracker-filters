@@ -45,7 +45,12 @@
 
 
             <label>Filter by First Album Date:</label><br>
-            <input type="date" name="firstAlbumDate"><br>
+            <!-- <input type="date" name="firstAlbumDate"><br> -->
+            <div class="range-slider">
+                <input type="range" id="lowerAlbum" name="minAlbumDate" max="2023" min="1950" step="0" value="1950">
+                <input type="range" id="upperAlbum" name="maxAlbumDate" max="2023" min="1950" step="0" value="2023">
+                <div id="album-date-range-values">1950 - 2023</div>
+            </div>
 
 
             <label>Filter by Location:</label><br>
@@ -109,7 +114,7 @@
             clearFiltersButton.addEventListener('click', function() {
             localStorage.removeItem('formData');
             form.reset();
-            updateValue(); // to reset the range input display
+            updateValues(); // to reset the range input display
             uncheckAllCheckboxes();
             });
     
@@ -129,6 +134,25 @@
         const lower = document.getElementById('lower');
         const upper = document.getElementById('upper');
         const dateRangeValues = document.getElementById('date-range-values');
+
+
+        const lowerAlbum = document.getElementById('lowerAlbum');
+        const upperAlbum = document.getElementById('upperAlbum');
+        const albumRangeValues = document.getElementById('album-date-range-values');
+
+        function updateAlbumValues() {
+            if (parseInt(lowerAlbum.value) >= parseInt(upperAlbum.value)) {
+                if (lowerAlbum.value == upperAlbum.value) {
+                    lowerAlbum.value = parseInt(upperAlbum.value) - 1;
+                } else {
+                    upperAlbum.value = parseInt(lowerAlbum.value) + 1;
+                }
+            }
+            albumRangeValues.textContent = `${lowerAlbum.value} - ${upperAlbum.value}`;
+        }
+
+        lowerAlbum.addEventListener('input', updateAlbumValues);
+        upperAlbum.addEventListener('input', updateAlbumValues);
 
         function updateValues() {
             if (parseInt(lower.value) >= parseInt(upper.value)) {

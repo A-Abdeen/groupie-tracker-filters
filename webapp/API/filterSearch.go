@@ -8,16 +8,18 @@ import (
 	"strings"
 )
 
-func OrNotTosearch(members string, mincreation string, maxcreation string, firstAlbum string, location string, APIcall []Artists) ([]Artists, error) {
-	albumYear := 0
-	albumMonth := 0
-	albumDay := 0
+func OrNotTosearch(members string, mincreation string, maxcreation string, minAlbum string, maxAlbum string, location string, APIcall []Artists) ([]Artists, error) {
+	// albumYear := 0
+	// albumMonth := 0
+	// albumDay := 0
+	minAlbumInt := 0
+	maxAlbumInt := 0
 	mincreationYear := 0
 	maxcreationYear := 0
 	membersInt := 0
 	var err error
 
-	if members == "" && mincreation == "1900" && maxcreation == "2099" && firstAlbum == "" && location == "none" {
+	if members == "" && mincreation == "1950" && maxcreation == "2023" && minAlbum == "1950" && maxAlbum == "2023" && location == "none" {
 		return APIcall, nil
 	}
 
@@ -35,25 +37,25 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, first
 	if location != "" {
 		location = strings.ToUpper(location)
 	}
-	if firstAlbum != "" {
-		// Split the input string using "-"
-		albumDateComponents := strings.Split(firstAlbum, "-")
+	// if firstAlbum != "" {
+	// 	// Split the input string using "-"
+	// 	albumDateComponents := strings.Split(firstAlbum, "-")
 
-		// Extract the components and convert them to integers
-		albumYear, err = strconv.Atoi(albumDateComponents[0])
-		if err != nil {
-			return nil, err
-		}
-		albumMonth, err = strconv.Atoi(albumDateComponents[1])
-		if err != nil {
-			return nil, err
-		}
-		albumDay, err = strconv.Atoi(albumDateComponents[2])
-		if err != nil {
-			return nil, err
-		}
+	// 	// Extract the components and convert them to integers
+	// 	albumYear, err = strconv.Atoi(albumDateComponents[0])
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	albumMonth, err = strconv.Atoi(albumDateComponents[1])
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	albumDay, err = strconv.Atoi(albumDateComponents[2])
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
 
-	}
+	// }
 
 	if mincreation != "" {
 		// Extract the year and convert to int
@@ -65,6 +67,21 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, first
 	if maxcreation != "" {
 		// Extract the year and convert to int
 		maxcreationYear, err = strconv.Atoi(maxcreation)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if minAlbum != "" {
+		// Extract the year and convert to int
+		minAlbumInt, err = strconv.Atoi(minAlbum)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if maxAlbum != "" {
+		// Extract the year and convert to int
+		maxAlbumInt, err = strconv.Atoi(maxAlbum)
 		if err != nil {
 			return nil, err
 		}
@@ -91,7 +108,7 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, first
 				continue
 			}
 		}
-		if firstAlbum != "" {
+		if minAlbum != "" && maxAlbum != "" {
 			// Split the input string using "-"
 			DateComponents := strings.Split(oneArtist.FirstAlbum, "-")
 
@@ -99,26 +116,33 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, first
 			year := Atoi(DateComponents[2])
 			// fmt.Println(DateComponents[2])
 
-			month := Atoi(DateComponents[1])
+			// month := Atoi(DateComponents[1])
 			// fmt.Println(DateComponents[1])
 
-			day := Atoi(DateComponents[0])
+			// day := Atoi(DateComponents[0])
 			// fmt.Println(DateComponents[0])
 
-			if albumYear < year {
+			// if albumYear < year {
+			// 	ifMatching = true
+			// } else if albumYear == year {
+			// 	if albumMonth <= month {
+			// 		if albumDay <= day {
+			// 			ifMatching = true
+			// 		} else {
+			// 			ifMatching = false
+			// 			continue
+			// 		}
+			// 	} else {
+			// 		ifMatching = false
+			// 		continue
+			// 	}
+			// } else {
+			// 	ifMatching = false
+			// 	continue
+			// }
+
+			if (minAlbumInt <= year) && (maxAlbumInt >= year) {
 				ifMatching = true
-			} else if albumYear == year {
-				if albumMonth <= month {
-					if albumDay <= day {
-						ifMatching = true
-					} else {
-						ifMatching = false
-						continue
-					}
-				} else {
-					ifMatching = false
-					continue
-				}
 			} else {
 				ifMatching = false
 				continue

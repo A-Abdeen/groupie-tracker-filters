@@ -195,6 +195,17 @@ button:hover {
     z-index: 0; /* Ensuring this is behind the sliders */
 }
 
+.range-slider #album-date-range-values {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 100%; /* Positioned just below the sliders */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5px; /* A small gap between the sliders and the label */
+    z-index: 0; /* Ensuring this is behind the sliders */
+}
+
 input[type=range] {
     width: 100%;
     position: absolute;
