@@ -101,7 +101,7 @@
             header.addEventListener('click', function() {
             localStorage.removeItem('formData');
             form.reset();
-            updateValue(); // to reset the range input display
+            updateValues(); // to reset the range input display
             uncheckAllCheckboxes();
             });
 
@@ -169,7 +169,7 @@
                     });
 
                 });
-                updateValue();
+                updateValues();
             }
         }
 
@@ -211,7 +211,7 @@
         });
 
         // Initial call to set displayed values and load saved filters
-        updateValue();
+        updateValues();
         loadFilters();
         });
     </script>
