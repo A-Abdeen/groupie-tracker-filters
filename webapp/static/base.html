@@ -107,6 +107,7 @@
             localStorage.removeItem('formData');
             form.reset();
             updateValues(); // to reset the range input display
+            updateAlbumValues();
             uncheckAllCheckboxes();
             });
 
@@ -115,6 +116,7 @@
             localStorage.removeItem('formData');
             form.reset();
             updateValues(); // to reset the range input display
+            updateAlbumValues();
             uncheckAllCheckboxes();
             });
     
@@ -170,7 +172,7 @@
 
         // Initial call to set displayed values
         updateValues();
-
+        updateAlbumValues();
 
         // Load saved filters from Local Storage
         function loadFilters() {
@@ -194,6 +196,7 @@
 
                 });
                 updateValues();
+                updateAlbumValues();
             }
         }
 
@@ -236,6 +239,7 @@
 
         // Initial call to set displayed values and load saved filters
         updateValues();
+        updateAlbumValues();
         loadFilters();
         });
     </script>
