@@ -1,14 +1,15 @@
 package gt
 
 import (
-	// API "gt/webapp/API"
 	"html/template"
 	"net/http"
+
+	API "gt/webapp/API"
 	// "fmt"
 )
 
 func BaseHandler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println("BaseHandler is called.") // XXX
+	// fmt.Println("BaseHandler is called.") // XXX
 	// Verify Request Method
 	if r.Method != "GET" {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed)
@@ -20,12 +21,16 @@ func BaseHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// typedData := r.FormValue("search")
-    // API.SuggestionBox(typedData, APIcall)
+	// API.SuggestionBox(typedData, APIcall)
 	t, err := template.ParseFiles(HtmlTmpl...)
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	t.ExecuteTemplate(w, "base.html", APIcall) // execution of all artists details to be presented in the homepage using base.html
+	var response API.Response
+	response.Artists = APIcall
+	response.MinAndMaxDates = MinAndMaxDates
+	// fmt.Println(response.Artists)
+	t.ExecuteTemplate(w, "base.html", response) // execution of all artists details to be presented in the homepage using base.html
 }

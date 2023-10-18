@@ -35,5 +35,9 @@ func FiltersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	t.ExecuteTemplate(w, "base.html", filteredDataToReturn)
+	var response API.Response
+	response.Artists = filteredDataToReturn
+	response.MinAndMaxDates = MinAndMaxDates
+	// fmt.Println(response.Artists)
+	t.ExecuteTemplate(w, "base.html", response) // execution of all artists details to be presented in the homepage using base.html
 }

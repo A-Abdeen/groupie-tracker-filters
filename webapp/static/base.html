@@ -36,9 +36,9 @@
             <br> -->
 
             <div class="range-slider">
-                <input type="range" id="lower" name="minCreationDate" max="2023" min="1950" step="0" value="1950">
-                <input type="range" id="upper" name="maxCreationDate" max="2023" min="1950" step="0" value="2023">
-                <div id="date-range-values">1950 - 2023</div>
+                <input type="range" id="lower" name="minCreationDate" max={{.MinAndMaxDates.MaxCreationDate}} min={{.MinAndMaxDates.MinCreationDate}} step="0" value= {{.MinAndMaxDates.MinCreationDate}}>
+                <input type="range" id="upper" name="maxCreationDate" max={{.MinAndMaxDates.MaxCreationDate}} min={{.MinAndMaxDates.MinCreationDate}} step="0" value={{.MinAndMaxDates.MaxCreationDate}}>
+                <div id="date-range-values">0000 - 0000</div>
             </div>
             
 
@@ -46,16 +46,19 @@
 
             <label>Filter by First Album Date:</label><br>
             <!-- <input type="date" name="firstAlbumDate"><br> -->
+
             <div class="range-slider">
-                <input type="range" id="lowerAlbum" name="minAlbumDate" max="2023" min="1950" step="0" value="1950">
-                <input type="range" id="upperAlbum" name="maxAlbumDate" max="2023" min="1950" step="0" value="2023">
-                <div id="album-date-range-values">1950 - 2023</div>
+                <input type="range" id="lowerAlbum" name="minAlbumDate" max={{.MinAndMaxDates.MaxAlbumDate}} min={{.MinAndMaxDates.MinAlbumDate}} step="0" value= {{.MinAndMaxDates.MinAlbumDate}}>
+                <input type="range" id="upperAlbum" name="maxAlbumDate" max={{.MinAndMaxDates.MaxAlbumDate}} min={{.MinAndMaxDates.MinAlbumDate}} step="0" value={{.MinAndMaxDates.MaxAlbumDate}}>
+                <div id="album-date-range-values">0000 - 0000</div>
             </div>
+
+            
 
 
             <label>Filter by Location:</label><br>
             <select name="locations" id="location">
-                {{ range . }}
+                {{ range .Artists }}
                 {{range .Locations}}
                 <option value="{{.}}">{{.}}</option>
                 {{end}}
@@ -81,7 +84,7 @@
     
 
     <div class="artists-container">
-        {{range .}}
+        {{range .Artists}}
         <a href="/details?id={{.Id}}" class="artist-card">
             <div class="artist-image">
                 <img src="{{.Image}}" alt="{{.Name}}">

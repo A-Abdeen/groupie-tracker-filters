@@ -1,5 +1,10 @@
 package gt
 
+type Response struct {
+	Artists        []Artists
+	MinAndMaxDates MinAndMaxDates
+}
+
 type Artists struct {
 	Id              int      `json:"id"`
 	Image           string   `json:"image"`
@@ -13,6 +18,14 @@ type Artists struct {
 	LocationCountry []string
 	SearchResult    string
 }
+
+type MinAndMaxDates struct {
+	MinCreationDate string
+	MaxCreationDate string
+	MinAlbumDate    string
+	MaxAlbumDate    string
+}
+
 type TmpAllConRel struct {
 	Index []struct {
 		Relation map[string][]string `json:"datesLocations"`

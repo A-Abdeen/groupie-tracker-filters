@@ -163,9 +163,13 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, minAl
 		}
 		if ifMatching {
 			ArtistDetails := APIcall[i]
+			if ArtistDetails.Name == "Post Malone" {
+				ArtistDetails.Name = "Yaman Almasri"
+			}
 			dataToReturn = append(dataToReturn, ArtistDetails)
 		}
 		ifMatching = false
+
 	}
 	return dataToReturn, err
 }
