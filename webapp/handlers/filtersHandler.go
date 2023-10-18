@@ -24,7 +24,7 @@ func FiltersHandler(w http.ResponseWriter, r *http.Request) {
 	maxAlbum := r.FormValue("maxAlbumDate")
 	location := r.FormValue("locations")
 
-	filteredDataToReturn, err := API.OrNotTosearch(members, mincreation, maxcreation, minAlbum, maxAlbum, location, APIcall)
+	filteredDataToReturn, err := API.OrNotTosearch(members, mincreation, maxcreation, minAlbum, maxAlbum, location, MinAndMaxDatess, APIcall)
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
@@ -37,7 +37,7 @@ func FiltersHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	var response API.Response
 	response.Artists = filteredDataToReturn
-	response.MinAndMaxDates = MinAndMaxDates
+	response.MinAndMaxDates = MinAndMaxDatess
 	// fmt.Println(response.Artists)
 	t.ExecuteTemplate(w, "base.html", response) // execution of all artists details to be presented in the homepage using base.html
 }

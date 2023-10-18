@@ -17,9 +17,9 @@ at a global scope.
 */
 
 var (
-	HtmlTmpl       []string // global variables to be used by other functions
-	APIcall        []API.Artists
-	MinAndMaxDates API.MinAndMaxDates
+	HtmlTmpl        []string // global variables to be used by other functions
+	APIcall         []API.Artists
+	MinAndMaxDatess API.MinAndMaxDates
 )
 
 func Init() {
@@ -58,8 +58,8 @@ func Init() {
 			maxCreation = APIcall[i].Creationdate
 		}
 	}
-	MinAndMaxDates.MinCreationDate = fmt.Sprint(minCreation)
-	MinAndMaxDates.MaxCreationDate = fmt.Sprint(maxCreation)
+	MinAndMaxDatess.MinCreationDate = fmt.Sprint(minCreation)
+	MinAndMaxDatess.MaxCreationDate = fmt.Sprint(maxCreation)
 
 	// findings for min and max album dates
 	minAlbumYear := time.Now().Year()
@@ -82,6 +82,6 @@ func Init() {
 		}
 	}
 
-	MinAndMaxDates.MinAlbumDate = fmt.Sprint(minAlbumYear)
-	MinAndMaxDates.MaxAlbumDate = fmt.Sprint(maxAlbumYear)
+	MinAndMaxDatess.MinAlbumDate = fmt.Sprint(minAlbumYear)
+	MinAndMaxDatess.MaxAlbumDate = fmt.Sprint(maxAlbumYear)
 }

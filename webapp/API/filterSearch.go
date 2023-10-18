@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func OrNotTosearch(members string, mincreation string, maxcreation string, minAlbum string, maxAlbum string, location string, APIcall []Artists) ([]Artists, error) {
+func OrNotTosearch(members string, mincreation string, maxcreation string, minAlbum string, maxAlbum string, location string, dates MinAndMaxDates, APIcall []Artists) ([]Artists, error) {
 	// albumYear := 0
 	// albumMonth := 0
 	// albumDay := 0
@@ -19,7 +19,7 @@ func OrNotTosearch(members string, mincreation string, maxcreation string, minAl
 	membersInt := 0
 	var err error
 
-	if members == "" && mincreation == "1950" && maxcreation == "2023" && minAlbum == "1950" && maxAlbum == "2023" && location == "none" {
+	if members == "" && mincreation == dates.MinCreationDate && maxcreation == dates.MaxCreationDate && minAlbum == dates.MinAlbumDate && maxAlbum == dates.MaxAlbumDate && location == "none" {
 		return APIcall, nil
 	}
 
