@@ -5,8 +5,6 @@ import (
 	"strings"
 	"time"
 
-	Atoi "gt/webapp/API"
-
 	API "gt/webapp/API"
 )
 
@@ -20,6 +18,7 @@ var (
 	HtmlTmpl        []string // global variables to be used by other functions
 	APIcall         []API.Artists
 	MinAndMaxDatess API.MinAndMaxDates
+	AllLocations    API.AllLocations
 )
 
 func Init() {
@@ -39,6 +38,20 @@ func Init() {
 		APIcall[i].Locations = allLocations[i]
 		APIcall[i].Dates = allDates[i]
 		APIcall[i].Relations = allRelations[i]
+	}
+
+	AllLocations.Locations = make([]string, 0, len(allLocations))
+	for _, indexLocation := range allLocations {
+		AllLocations.Locations = append(AllLocations.Locations, indexLocation...)
+	}
+	uniqueLocations := make(map[string]bool)
+	for _, location := range AllLocations.Locations {
+		uniqueLocations[location] = true
+	}
+
+	AllLocations.Locations = make([]string, 0, len(uniqueLocations))
+	for location := range uniqueLocations {
+		AllLocations.Locations = append(AllLocations.Locations, location)
 	}
 
 	// findings for min and max dates
@@ -69,7 +82,7 @@ func Init() {
 		// Split the date string into components
 		DateComponents := strings.Split(oneArtist.FirstAlbum, "-")
 		// Extract the components and convert them to integers
-		year := Atoi.Atoi(DateComponents[2])
+		year := API.Atoi(DateComponents[2])
 		if year == minAlbumYear || year == maxAlbumYear {
 			continue
 		}

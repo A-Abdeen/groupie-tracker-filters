@@ -15,13 +15,14 @@
     <div id="filter-form-container" class="filter-form-container">
         <form id="filter-form" action="/filters" method="get">
             <label>Filter by Number of Members:</label><br>
-            <label><input type="checkbox" name="members" value="1">1</label><br>
-            <label><input type="checkbox" name="members" value="2">2</label><br>
-            <label><input type="checkbox" name="members" value="3">3</label><br>
-            <label><input type="checkbox" name="members" value="4">4</label><br>
-            <label><input type="checkbox" name="members" value="5">5</label><br>
-            <label><input type="checkbox" name="members" value="6">6</label><br>
-            <label><input type="checkbox" name="members" value="7">7</label><br>
+            <label><input type="checkbox" name="members1" value="1">1</label><br>
+            <label><input type="checkbox" name="members2" value="2">2</label><br>
+            <label><input type="checkbox" name="members3" value="3">3</label><br>
+            <label><input type="checkbox" name="members4" value="4">4</label><br>
+            <label><input type="checkbox" name="members5" value="5">5</label><br>
+            <label><input type="checkbox" name="members6" value="6">6</label><br>
+            <label><input type="checkbox" name="members7" value="7">7</label><br>
+            <label><input type="checkbox" name="members8" value="8">8</label><br>
 
             <label>Filter by Creation Date:</label><br>
             <!-- <div id="creation-date-range">
@@ -58,11 +59,11 @@
 
             <label>Filter by Location:</label><br>
             <select name="locations" id="location">
-                {{ range .Artists }}
-                {{range .Locations}}
+                
+                {{range .Locations.Locations}}
                 <option value="{{.}}">{{.}}</option>
                 {{end}}
-                {{ end}}
+                
                 <option value="none" selected>None</option>
             </select>
             
@@ -95,10 +96,17 @@
         </a>
         {{end}}
     </div>
-
+    
+    <!-- using javascript to do the following: 
+    1. get the form data
+    2. save the form data to local storage
+    3. load the form data from local storage
+    4. clear the form data from local storage
+    5. update the form data display when the form data changes
+    -->
     <script>
         
-    
+        
         document.addEventListener('DOMContentLoaded', function() {
             const filterFormContainer = document.getElementById('filter-form-container');
             const toggleFiltersButton = document.getElementById('toggle-filters');

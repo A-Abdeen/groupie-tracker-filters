@@ -31,6 +31,7 @@ func BaseHandler(w http.ResponseWriter, r *http.Request) {
 	var response API.Response
 	response.Artists = APIcall
 	response.MinAndMaxDates = MinAndMaxDatess
+	response.Locations = AllLocations
 	// fmt.Println(response.Artists)
 	t.ExecuteTemplate(w, "base.html", response) // execution of all artists details to be presented in the homepage using base.html
 }

@@ -3,6 +3,7 @@ package gt
 type Response struct {
 	Artists        []Artists
 	MinAndMaxDates MinAndMaxDates
+	Locations      AllLocations
 }
 
 type Artists struct {
@@ -17,6 +18,10 @@ type Artists struct {
 	Dates           []string
 	LocationCountry []string
 	SearchResult    string
+}
+
+type AllLocations struct {
+	Locations []string
 }
 
 type MinAndMaxDates struct {
